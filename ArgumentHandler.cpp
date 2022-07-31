@@ -33,6 +33,6 @@ void ArgumentHandler::printHelp(std::string error)
 {
     fprintf(stderr, "Error: %s\n", error.c_str());
     printf("Help: \n");
-    printf("Usage: rollhashdiff -signatureFile -file2 -deltaFile\n");
+    printf("Usage: rollhashdiff -file1 -file2 -deltaFile\n");
     exit(EXIT_SUCCESS);
 }
