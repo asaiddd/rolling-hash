@@ -8,13 +8,13 @@ class DeltaCalculator
 private:
     struct Chunks
     {
-        unsigned char *data;
+        char *data;
         uint hash;
         long size;
         uint chunkCount;
         long startIdx;
         long endIdx;
-        bool finished;
+        bool lastChunk;
     };
 
     struct Chunks chunks1, chunks2;
@@ -23,15 +23,18 @@ private:
     std::vector<uint> additions;
     std::vector<uint> changes;
     std::vector<uint> removals;
+
     void initHashes();
-    int iterate();
-    void handleAdditions();
-    void handleRemovals();
+    void iterate();
+    void handleAdditions(long startIdx);
+    void handleRemovals(long startIdx);
+    void lastChunk();
 
 public:
     DeltaCalculator();
     ~DeltaCalculator();
-    DeltaCalculator(unsigned char *data1, unsigned char *data2, const short chunkSize = 4);
+    DeltaCalculator(char *data1, char *data2, const short chunkSize = 4);
+    std::vector<char*> getChunks();
 
     std::tuple<std::vector<uint>, std::vector<uint>, std::vector<uint>> calculateDelta();
 };

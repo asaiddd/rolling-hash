@@ -26,7 +26,7 @@ ArgumentHandler::~ArgumentHandler() {}
 
 std::tuple<std::string, std::string, std::string> ArgumentHandler::getFilenames()
 {
-    return {filename1, filename2, deltaFileName};
+    return {std::move(filename1), std::move(filename2), std::move(deltaFileName)};
 }
 
 void ArgumentHandler::printHelp(std::string error)

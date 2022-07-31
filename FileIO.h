@@ -14,7 +14,7 @@ public:
     ~FileIO();
 
     // returns a pointer to byte array on the heap
-    static unsigned char *readFile(const std::string filename);
+    static char *readFile(const std::string filename);
     static FILE *openWriteOnlyFile(const std::string filename);
     static void writeDelta(FILE *fp, std::vector<uint> delta, std::string deltaType);
 };

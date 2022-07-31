@@ -13,8 +13,8 @@ int main(int argc, char **argv)
 
     std::cout << filename1 << filename2 << deltaFilename << std::endl;
 
-    unsigned char *file1 = FileIO::readFile(filename1);
-    unsigned char *file2 = FileIO::readFile(filename2);
+    char *file1 = FileIO::readFile(filename1);
+    char *file2 = FileIO::readFile(filename2);
     DeltaCalculator d1(file1, file2);
     auto [additions, changes, removals] = d1.calculateDelta();
 
@@ -23,5 +23,10 @@ int main(int argc, char **argv)
     FileIO::writeDelta(deltaFile, additions, "Additions");
     FileIO::writeDelta(deltaFile, changes, "Changes");
     FileIO::writeDelta(deltaFile, removals, "Removals");
+        
+    fclose(deltaFile);
+    free(file1);
+    free(file2);
+
     return 1;
 }

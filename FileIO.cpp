@@ -34,7 +34,7 @@ FILE *FileIO::openWriteOnlyFile(const std::string filename)
 }
 
 // returns a pointer to byte array on the heap
-unsigned char *FileIO::readFile(const ::std::string filename)
+char *FileIO::readFile(const ::std::string filename)
 {
     FILE *fp = openReadOnlyFile(filename);
     if (fseek(fp, 0, SEEK_END) != 0) // set cursor to end
@@ -57,8 +57,9 @@ unsigned char *FileIO::readFile(const ::std::string filename)
 
     rewind(fp); // set cursor to start
 
-    unsigned char *buffer = (unsigned char *)malloc(size);
+    char *buffer = (char *)malloc(size);
     fread(buffer, size, 1, fp);
+    fclose(fp);
     return buffer;
 }
 
