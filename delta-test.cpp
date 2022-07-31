@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string.h>
 #include <string>
+#include <unistd.h>
 
 void freeData(char *c1, char *c2)
 {
@@ -26,14 +27,22 @@ void printVector(std::vector<uint> vec, std::string vecName)
 int main(void)
 {
     // file operation tests
-    char *s1 = FileIO::readFile("/home/saidoff/playground/rolling-hash/input/digits.txt");
-    char *s2 = FileIO::readFile("/home/saidoff/playground/rolling-hash/input/name.txt");
+    char tmp[256];
+    getcwd(tmp, 256);
+    char digitsFile[512];
+    sprintf(digitsFile, "%s/input/digits.txt", tmp);
+    char nameFile[512];
+    sprintf(nameFile, "%s/input/name.txt", tmp);
+    std::cout << digitsFile << nameFile << std::endl;
+    char *s1 = FileIO::readFile(digitsFile);
+    char *s2 = FileIO::readFile(nameFile);
 
     std::string str1{s1};
     std::string str2{s2};
 
     assert(str1 == "1234567890");
-    assert(str2 == "ahmet sait tekkurt");
+    std::cout << str2 << std::endl;
+    assert(str2 == "authorname");
     std::cout << "File has been read succesfully" << std::endl;
 
     // Delta Calculator constructor test
@@ -43,7 +52,7 @@ int main(void)
     std::string str4{(char*)vec[1]};
 
     assert(str3 == "1234567890");
-    assert(str4 == "ahmet sait tekkurt");
+    assert(str4 == "authorname");
     std::cout << "DeltaCalculator with given string is constructed: success "<< std::endl;
 
     char *data1 = 0, *data2 = 0;
