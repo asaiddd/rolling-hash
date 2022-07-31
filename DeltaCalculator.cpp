@@ -38,18 +38,27 @@ DeltaCalculator::DeltaCalculator(char *data1, char *data2, const short chunkSize
     this->chunks1.lastChunk = this->chunks2.lastChunk = false;
 }
 
+// use simplest hash function
+static inline uint hash(char i)
+{
+    return i;
+}
+
 void DeltaCalculator::initHashes()
 {
+    chunks1.hash = 0;
+    chunks2.hash = 0;
+
     for (short i = 0; i < chunkSize; ++i)
     {
-        chunks1.hash += chunks1.data[i];
-        chunks2.hash += chunks2.data[i];
+        chunks1.hash += hash(chunks1.data[i]);
+        chunks2.hash += hash(chunks2.data[i]);
     }
 }
 
 uint rollHash(uint oldHash, char firstChar, char nextChar)
 {
-    return oldHash - firstChar + nextChar;
+    return oldHash - hash(firstChar) + hash(nextChar);
 }
 
 void DeltaCalculator::lastChunk()
