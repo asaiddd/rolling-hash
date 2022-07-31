@@ -58,7 +58,17 @@ char *FileIO::readFile(const ::std::string filename)
     rewind(fp); // set cursor to start
 
     char *buffer = (char *)malloc(size);
-    fread(buffer, size, 1, fp);
+    if (buffer == NULL)
+    {
+        fprintf(stderr, "malloc() failed: %s\n", strerror(errno));
+        exit(EXIT_FAILURE);
+    }
+
+    if (fread(buffer, size, 1, fp) <= 0)
+    { // actually 0 is not an error but we do not expect it
+        fprintf(stderr, "fread() failed: %s\n", strerror(errno));
+        exit(EXIT_FAILURE);
+    }
     fclose(fp);
     return buffer;
 }
