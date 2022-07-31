@@ -24,7 +24,7 @@ ArgumentHandler::ArgumentHandler(int argc, char **argv)
 
 ArgumentHandler::~ArgumentHandler() {}
 
-std::tuple<std::string, std::string, std::string> ArgumentHandler::getFilenames()
+std::vector<std::string> ArgumentHandler::getFilenames()
 {
     return {std::move(filename1), std::move(filename2), std::move(deltaFileName)};
 }

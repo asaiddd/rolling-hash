@@ -36,5 +36,5 @@ public:
     DeltaCalculator(char *data1, char *data2, const short chunkSize = 4);
     std::vector<char*> getChunks();
 
-    std::tuple<std::vector<uint>, std::vector<uint>, std::vector<uint>> calculateDelta();
+    std::vector<std::vector<uint>> calculateDelta();
 };

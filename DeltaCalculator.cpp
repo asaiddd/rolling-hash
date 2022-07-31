@@ -65,10 +65,12 @@ void DeltaCalculator::lastChunk()
     {
         for (int i = chunks1.startIdx; i < chunks1.size; ++i)
         {
+            std::cout <<" hash1: " << chunks1.hash << " hash2: " << chunks2.hash << std::endl;
             chunks1.hash = rollHash(chunks1.hash, chunks1.data[i], 0);
-            chunks2.hash = rollHash(chunks1.hash, chunks2.data[i], 0);
+            chunks2.hash = rollHash(chunks2.hash, chunks2.data[i], 0);
             if (chunks1.hash != chunks2.hash)
             {
+                std::cout << "Pushing: " << i << std::endl;
                 changes.push_back(i);
             }
         }
@@ -101,7 +103,7 @@ void DeltaCalculator::iterate()
     chunks2.hash = rollHash(chunks2.hash, chunks2.data[chunks2.startIdx-1], chunks2.data[chunks2.endIdx]);
 }
 
-std::tuple<std::vector<uint>, std::vector<uint>, std::vector<uint>> DeltaCalculator::calculateDelta()
+std::vector<std::vector<uint>> DeltaCalculator::calculateDelta()
 {
     std::cout << "calculating delta" << std::endl;
     initHashes();
@@ -128,7 +130,7 @@ std::tuple<std::vector<uint>, std::vector<uint>, std::vector<uint>> DeltaCalcula
         std::cout << "#################################" << std::endl;
     }
 
-    return std::make_tuple(std::move(additions), std::move(changes), std::move(removals));
+    return {std::move(additions), std::move(changes), std::move(removals)};
 }
 
 void DeltaCalculator::handleAdditions(long startIdx)

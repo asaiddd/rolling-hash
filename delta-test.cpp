@@ -2,6 +2,7 @@
 #include "FileIO.h"
 #include <assert.h>
 #include <iostream>
+#include <string.h>
 #include <string>
 
 int main(void)
@@ -26,17 +27,24 @@ int main(void)
     assert(str3 == "1234567890");
     assert(str4 == "ahmet sait tekkurt");
 
-
-    // Chunk count check
-    char *data1 = "sh";
-    char *data2 = "longdata";
-    DeltaCalculator d2(data2, data1);
-    DeltaCalculator d3(data1, data2);
+    char *data1, *data2;
 
     // same input
-    DeltaCalculator d4("helloworld", "helloworld");
-    
+    data1 = strdup("helloworld");
+    data2 = strdup("helloworld");
+    DeltaCalculator d4(data1, data2);
+    std::vector<std::vector<uint>> delta = d4.calculateDelta();
+    assert(delta[0].empty());
+    assert(delta[1].empty());
+    assert(delta[2].empty());
+    free(data1);
+    free(data2);
 
+    // Chunk count check
+    data1 = strdup("sh");
+    data2 = strdup("longdata");
+    DeltaCalculator d2(data2, data1);
+    DeltaCalculator d3(data1, data2);
 
     return 1;
 }

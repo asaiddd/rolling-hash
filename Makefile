@@ -14,4 +14,4 @@ test: $(TESTOBJ)
 	$(CC) -o $@ $^ $(CFLAGS)
 
 clean:
-	rm -rf *.o rollhashdiff
+	rm -rf *.o rollhashdiff test

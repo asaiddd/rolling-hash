@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-#include <tuple>
+#include <vector>
 
 class ArgumentHandler
 {
@@ -18,5 +18,5 @@ public:
     ArgumentHandler(int argc, char **argv);
     ~ArgumentHandler();
     ArgumentHandler();
-    std::tuple<std::string, std::string, std::string> getFilenames();
+    std::vector<std::string> getFilenames();
 };

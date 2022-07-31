@@ -9,20 +9,18 @@
 int main(int argc, char **argv)
 {
     auto argHandler = ArgumentHandler(argc, argv);
-    auto [filename1, filename2, deltaFilename] = argHandler.getFilenames();
+    std::vector<std::string> filenames = argHandler.getFilenames();
 
-    std::cout << filename1 << filename2 << deltaFilename << std::endl;
-
-    char *file1 = FileIO::readFile(filename1);
-    char *file2 = FileIO::readFile(filename2);
+    char *file1 = FileIO::readFile(filenames[0]);
+    char *file2 = FileIO::readFile(filenames[1]);
     DeltaCalculator d1(file1, file2);
-    auto [additions, changes, removals] = d1.calculateDelta();
+    std::vector<std::vector<uint>> delta = d1.calculateDelta();
 
-    FILE *deltaFile = FileIO::openWriteOnlyFile(deltaFilename);
+    FILE *deltaFile = FileIO::openWriteOnlyFile(filenames[2]);
 
-    FileIO::writeDelta(deltaFile, additions, "Additions");
-    FileIO::writeDelta(deltaFile, changes, "Changes");
-    FileIO::writeDelta(deltaFile, removals, "Removals");
+    FileIO::writeDelta(deltaFile, delta[0], "Additions");
+    FileIO::writeDelta(deltaFile, delta[1], "Changes");
+    FileIO::writeDelta(deltaFile, delta[2], "Removals");
         
     fclose(deltaFile);
     free(file1);
