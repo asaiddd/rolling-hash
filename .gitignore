@@ -1,0 +1,6 @@
+*.o
+test
+rollhashdiff
+.vscode
+.vscode*
+deltafile
